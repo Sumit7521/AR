@@ -167,14 +167,14 @@ export default function ARViewer({
           const size = box.getSize(new THREE.Vector3());
           const center = box.getCenter(new THREE.Vector3());
           const maxDim = Math.max(size.x, size.y, size.z);
-          // Scale proportionally (larger size for enhanced visibility)
-          const normScale = maxDim > 0 ? (1.35 / maxDim) * scale : 1.0;
-
+          // Scale proportionally so it fits directly on top of the card
+          const normScale = maxDim > 0 ? (1.05 / maxDim) * scale : 1.0;
           model.scale.setScalar(normScale);
-          // Center on card and position directly on top of card surface (Y = 0)
+
+          // Center precisely on card (X and Y centered, Z resting on card surface)
           model.position.x = -center.x * normScale;
-          model.position.y = (-box.min.y) * normScale + 0.02;
-          model.position.z = -center.z * normScale;
+          model.position.y = -center.y * normScale;
+          model.position.z = (-box.min.z) * normScale + 0.02;
 
           group.add(model);
         },
