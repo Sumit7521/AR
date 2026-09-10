@@ -218,16 +218,16 @@ button, a, input, select, textarea {
 /* 6DoF Telemetry HUD */
 .telemetry-overlay {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   z-index: 150;
-  max-width: 280px;
-  width: calc(100% - 24px);
+  max-width: 260px;
+  width: calc(100% - 130px);
   pointer-events: none !important;
 }
 
 .telemetry-overlay.collapsed {
-  max-width: 200px;
+  max-width: 175px;
 }
 
 .telemetry-card {
@@ -780,9 +780,9 @@ button, a, input, select, textarea {
   .telemetry-overlay {
     top: 8px;
     left: 8px;
-    right: 8px;
+    right: auto;
     width: auto;
-    max-width: none;
+    max-width: calc(100% - 120px);
   }
   .telemetry-overlay.collapsed {
     max-width: 170px;

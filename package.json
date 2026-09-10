@@ -15,8 +15,11 @@
     "react-dom": "19.2.8",
     "three": "^0.160.0"
   },
-  "devDependencies": {  
+  "devDependencies": {
     "eslint": "^9",
     "eslint-config-next": "16.3.2"
+  },
+  "overrides": {
+    "canvas": false
   }
 }
