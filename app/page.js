@@ -42,10 +42,16 @@ export default function Home() {
       {/* Top Navigation Bar */}
       <header className="navbar">
         <div className="brand-section">
-          <div className="brand-logo">AR</div>
+          <div className="brand-logo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+          </div>
           <div className="brand-info">
             <h1>6DoF WebAR</h1>
-            <p>Three.js & MindAR</p>
+            <p>Spatial Three.js Engine</p>
           </div>
         </div>
 
@@ -56,14 +62,23 @@ export default function Home() {
             className={`mode-btn ${mode === "studio" ? "active" : ""}`}
             onClick={() => setMode("studio")}
           >
-            <span>🎮</span> Studio 3D
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            Studio 3D
           </button>
           <button
             type="button"
             className={`mode-btn ${mode === "ar" ? "active" : ""}`}
             onClick={() => setMode("ar")}
           >
-            <span>📷</span> Live AR
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+            Live AR
           </button>
         </div>
 
@@ -74,7 +89,12 @@ export default function Home() {
             className="btn-secondary"
             onClick={() => setIsTargetModalOpen(true)}
           >
-            <span>🎯</span> <span className="hide-on-mobile">Target Marker</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" />
+              <circle cx="12" cy="12" r="2" />
+            </svg>
+            <span className="hide-on-mobile">Target Marker</span>
           </button>
         </div>
       </header>
@@ -134,43 +154,58 @@ export default function Home() {
 
           {/* Scale Slider */}
           <div className="slider-group">
-            <span>Scale:</span>
+            <span className="slider-label">Scale</span>
             <input
               type="range"
-              min="0.3"
-              max="2.5"
+              min="0.4"
+              max="2.2"
               step="0.1"
               value={scale}
               onChange={(e) => setScale(parseFloat(e.target.value))}
+              className="custom-range"
             />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", minWidth: "26px" }}>
+            <span className="scale-val">
               {scale.toFixed(1)}x
             </span>
           </div>
 
           <div className="control-separator" />
 
-          {/* Auto-rotate Toggle */}
-          <button
-            type="button"
-            className={`icon-btn ${autoRotate ? "active" : ""}`}
-            onClick={() => setAutoRotate(!autoRotate)}
-            title="Auto Rotation"
-          >
-            🔄
-          </button>
-
-          {/* Wireframe Toggle in Studio Mode */}
-          {mode === "studio" && (
+          {/* Action Buttons */}
+          <div className="dock-actions">
+            {/* Auto-rotate Toggle */}
             <button
               type="button"
-              className={`icon-btn ${showWireframe ? "active" : ""}`}
-              onClick={() => setShowWireframe(!showWireframe)}
-              title="Toggle Wireframe"
+              className={`icon-btn ${autoRotate ? "active" : ""}`}
+              onClick={() => setAutoRotate(!autoRotate)}
+              title="Auto Rotation"
+              aria-label="Auto Rotation"
             >
-              🕸️
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
             </button>
-          )}
+
+            {/* Wireframe Toggle in Studio Mode */}
+            {mode === "studio" && (
+              <button
+                type="button"
+                className={`icon-btn ${showWireframe ? "active" : ""}`}
+                onClick={() => setShowWireframe(!showWireframe)}
+                title="Toggle Wireframe"
+                aria-label="Toggle Wireframe"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <line x1="3" y1="9" x2="21" y2="9" />
+                  <line x1="3" y1="15" x2="21" y2="15" />
+                  <line x1="9" y1="3" x2="9" y2="21" />
+                  <line x1="15" y1="3" x2="15" y2="21" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
       </main>
 
@@ -181,7 +216,11 @@ export default function Home() {
           className={`mobile-tab-btn ${mode === "studio" ? "active" : ""}`}
           onClick={() => setMode("studio")}
         >
-          <span className="tab-icon">🎮</span>
+          <svg className="tab-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
           <span className="tab-label">Studio 3D</span>
         </button>
 
@@ -190,7 +229,10 @@ export default function Home() {
           className={`mobile-tab-btn ${mode === "ar" ? "active" : ""}`}
           onClick={() => setMode("ar")}
         >
-          <span className="tab-icon">📷</span>
+          <svg className="tab-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
           <span className="tab-label">Live AR</span>
         </button>
 
@@ -199,7 +241,11 @@ export default function Home() {
           className="mobile-tab-btn"
           onClick={() => setIsTargetModalOpen(true)}
         >
-          <span className="tab-icon">🎯</span>
+          <svg className="tab-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="2" />
+          </svg>
           <span className="tab-label">Marker Card</span>
         </button>
       </nav>

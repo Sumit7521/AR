@@ -323,23 +323,32 @@ export default function ARViewer({
       {!isStarted && !loading && (
         <div className="ar-start-overlay">
           <div className="ar-start-card">
-            <div className="ar-start-icon">📷✨</div>
-            <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "8px", color: "var(--accent-cyan)" }}>
-              6DoF AR Camera
-            </h2>
-            <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "16px", lineHeight: "1.4" }}>
-              Anchor 3D models with 6 Degrees of Freedom tracking onto the target marker card.
+            <div className="ar-start-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            </div>
+            
+            <h2 className="ar-start-title">WebAR Camera Experience</h2>
+            <p className="ar-start-subtitle">
+              Point your device camera at the target marker card to anchor and view the 3D model in real space.
             </p>
 
             {!isHttpsOk && (
               <div className="https-warning">
-                ⚠️ <b>Insecure HTTP Detected</b>: Mobile browsers require <b>HTTPS</b> (e.g. your ngrok URL) to enable the camera.
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span><b>HTTPS Required</b>: Mobile browsers mandate HTTPS to enable camera permissions.</span>
               </div>
             )}
 
             {cameraError && (
               <div className="camera-err-msg">
-                {cameraError}
+                <span>{cameraError}</span>
               </div>
             )}
 
@@ -348,7 +357,10 @@ export default function ARViewer({
               className="btn-start-ar"
               onClick={startAR}
             >
-              <span>📸</span> Launch AR Camera
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Launch AR Camera
             </button>
           </div>
         </div>
@@ -362,8 +374,12 @@ export default function ARViewer({
             <div className="reticle-corner tr" />
             <div className="reticle-corner bl" />
             <div className="reticle-corner br" />
+            <div className="reticle-scan-line" />
           </div>
-          <div className="reticle-text">SCANNING FOR TARGET CARD</div>
+          <div className="reticle-text">
+            <span className="reticle-dot" />
+            SCANNING TARGET MARKER
+          </div>
         </div>
       )}
 
@@ -371,8 +387,8 @@ export default function ARViewer({
       {loading && (
         <div className="ar-loader" style={{ pointerEvents: "none" }}>
           <div className="spinner" />
-          <div style={{ color: "var(--accent-cyan)", fontFamily: "var(--font-mono)", fontSize: "0.9rem" }}>
-            Starting AR Camera & Neural Tracker...
+          <div className="ar-loader-text">
+            Initializing WebAR Engine & Neural Tracker...
           </div>
         </div>
       )}
@@ -383,9 +399,12 @@ export default function ARViewer({
           type="button"
           className="ar-stop-btn"
           onClick={stopAR}
-          title="Stop Camera"
+          title="Stop Camera Stream"
         >
-          ⏹ Stop Camera
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+          </svg>
+          Stop Camera
         </button>
       )}
     </div>
