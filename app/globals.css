@@ -726,35 +726,36 @@ html, body {
   line-height: 1.35;
 }
 
-/* Floating Stop Camera Button */
-.ar-stop-btn {
+/* Floating Replay Animation Button (Top Right) */
+.ar-replay-top-btn {
   position: absolute;
   top: 14px;
   right: 14px;
   z-index: 220;
-  background: rgba(244, 63, 94, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(59, 130, 246, 0.3));
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  color: var(--accent-cyan);
+  padding: 6px 14px;
   border-radius: var(--radius-full);
   font-size: 0.75rem;
   font-weight: 700;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 240, 255, 0.25);
   transition: all var(--transition-fast);
 }
 
-.ar-stop-btn:hover {
-  background: rgba(244, 63, 94, 1);
+.ar-replay-top-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(59, 130, 246, 0.45));
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
   transform: translateY(-1px);
 }
 
-.ar-stop-btn:active {
+.ar-replay-top-btn:active {
   transform: scale(0.96);
 }
 

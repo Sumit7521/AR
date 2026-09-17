@@ -411,18 +411,27 @@ export default function ARViewer({
         </div>
       )}
 
-      {/* Floating Stop Button when AR is active */}
+      {/* Floating Replay Animation Button (in place of Stop Camera) */}
       {isStarted && (
         <button
           type="button"
-          className="ar-stop-btn"
-          onClick={stopAR}
-          title="Stop Camera Stream"
+          className="ar-replay-top-btn"
+          onClick={() => {
+            if (actionsRef.current && actionsRef.current.length > 0) {
+              actionsRef.current.forEach((action) => {
+                action.reset();
+                action.setLoop(THREE.LoopOnce, 1);
+                action.clampWhenFinished = true;
+                action.play();
+              });
+            }
+          }}
+          title="Replay Animation"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="4" y="4" width="16" height="16" rx="2" />
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
-          Stop Camera
+          Replay Anim
         </button>
       )}
     </div>
