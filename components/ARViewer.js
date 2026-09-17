@@ -5,9 +5,10 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 export default function ARViewer({
-  modelName = "damaged-helmet",
+  modelName = "Drone_base_Explode",
   scale = 1.0,
   autoRotate = false,
+  animKey = 0,
   onTrackingChange,
   onTelemetryUpdate,
 }) {
@@ -21,6 +22,7 @@ export default function ARViewer({
   const mindarRef = useRef(null);
   const currentModelRef = useRef(null);
   const mixerRef = useRef(null);
+  const actionsRef = useRef([]);
   const isMountedRef = useRef(true);
 
   // Check secure context on mount
@@ -148,15 +150,19 @@ export default function ARViewer({
           // Set up AnimationMixer if the model contains animations (e.g. Drone Explode)
           if (gltf.animations && gltf.animations.length > 0) {
             const mixer = new THREE.AnimationMixer(model);
+            const acts = [];
             gltf.animations.forEach((clip) => {
               const action = mixer.clipAction(clip);
               action.setLoop(THREE.LoopOnce, 1);
               action.clampWhenFinished = true;
               action.play();
+              acts.push(action);
             });
             mixerRef.current = mixer;
+            actionsRef.current = acts;
           } else {
             mixerRef.current = null;
+            actionsRef.current = [];
           }
 
           // Rotate 90 degrees on X-axis so drone lies flat facing upwards
@@ -313,6 +319,18 @@ export default function ARViewer({
       }
     }
   }, [scale]);
+
+  // Replay animation on trigger
+  useEffect(() => {
+    if (actionsRef.current && actionsRef.current.length > 0) {
+      actionsRef.current.forEach((action) => {
+        action.reset();
+        action.setLoop(THREE.LoopOnce, 1);
+        action.clampWhenFinished = true;
+        action.play();
+      });
+    }
+  }, [animKey]);
 
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>

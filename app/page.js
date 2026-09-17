@@ -22,6 +22,7 @@ export default function Home() {
   const [scale, setScale] = useState(1.0);
   const [autoRotate, setAutoRotate] = useState(false);
   const [showWireframe, setShowWireframe] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
   const [isTracking, setIsTracking] = useState(false);
 
@@ -119,6 +120,7 @@ export default function Home() {
             modelName={selectedModel}
             scale={scale}
             autoRotate={autoRotate}
+            animKey={animKey}
             onTrackingChange={setIsTracking}
             onTelemetryUpdate={handleTelemetryUpdate}
           />
@@ -130,6 +132,7 @@ export default function Home() {
             autoRotate={autoRotate}
             showWireframe={showWireframe}
             showAxes={true}
+            animKey={animKey}
             onTelemetryUpdate={handleTelemetryUpdate}
           />
         )}
@@ -173,6 +176,21 @@ export default function Home() {
 
           {/* Action Buttons */}
           <div className="dock-actions">
+            {/* Replay Animation Button (Shown for animated models) */}
+            {selectedModel === "Drone_base_Explode" && (
+              <button
+                type="button"
+                className="btn-replay-anim"
+                onClick={() => setAnimKey((prev) => prev + 1)}
+                title="Replay Animation"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <span>Replay</span>
+              </button>
+            )}
+
             {/* Auto-rotate Toggle */}
             <button
               type="button"

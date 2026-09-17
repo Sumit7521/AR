@@ -6,11 +6,12 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 export default function StudioViewer({
-  modelName = "damaged-helmet",
+  modelName = "Drone_base_Explode",
   scale = 1.0,
   autoRotate = true,
   showWireframe = false,
   showAxes = true,
+  animKey = 0,
   onTelemetryUpdate,
 }) {
   const containerRef = useRef(null);
@@ -18,6 +19,7 @@ export default function StudioViewer({
   const [loadProgress, setLoadProgress] = useState(0);
   const sceneRef = useRef(null);
   const currentMeshRef = useRef(null);
+  const actionsRef = useRef([]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -135,12 +137,17 @@ export default function StudioViewer({
         // Animation mixer for animated models
         if (gltf.animations && gltf.animations.length > 0) {
           mixer = new THREE.AnimationMixer(model);
+          const acts = [];
           gltf.animations.forEach((clip) => {
             const action = mixer.clipAction(clip);
             action.setLoop(THREE.LoopOnce, 1);
             action.clampWhenFinished = true;
             action.play();
+            acts.push(action);
           });
+          actionsRef.current = acts;
+        } else {
+          actionsRef.current = [];
         }
 
         // Rotate 90 degrees on X-axis so model renders flat
@@ -262,6 +269,18 @@ export default function StudioViewer({
       }
     };
   }, [modelName, scale, autoRotate, showWireframe, showAxes]);
+
+  // Replay animation on trigger
+  useEffect(() => {
+    if (actionsRef.current && actionsRef.current.length > 0) {
+      actionsRef.current.forEach((action) => {
+        action.reset();
+        action.setLoop(THREE.LoopOnce, 1);
+        action.clampWhenFinished = true;
+        action.play();
+      });
+    }
+  }, [animKey]);
 
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
